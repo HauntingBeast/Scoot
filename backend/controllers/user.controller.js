@@ -11,6 +11,7 @@ module.exports.registerUser = async (req, res, next) => {
   }
 
   const { fullname, email, password } = req.body;
+  console.log(fullname, email, password);
 
   const exists = await userModel.findOne({ email });
   if (exists) {
@@ -73,6 +74,7 @@ module.exports.logoutUser = async (req, res, next) => {
 module.exports.logoutUser = async (req, res, next) => {
   res.clearCookie("token");
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
-  await blacklistTokenModel.create({ token });
+  const exist = await blacklistTokenModel.findOne({ token });
+  if (!exist) await blacklistTokenModel.create({ token });
   return res.status(200).json({ message: "Logged Out" });
 };
