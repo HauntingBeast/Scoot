@@ -26,11 +26,11 @@ const UserLogin = () => {
     );
 
     if (response.status === 200) {
-      // console.log(response.data);
+      console.log(response.data);
 
       const data = response.data;
       setUser(data.user);
-      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("token", data.token);
       // console.log(user);
 
       navigate("/home");
